@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  rpm-download:
+    build:
+      context: .
+      dockerfile: Dockerfile-downloader
+      args:
+        RH_USER: CHANGE_ME
+        RH_PASSWORD: CHANGE_ME
+    volumes:
+      - ./rpm:/var/www/html/rhel_rpms
+      - ./repolist:/repolist
+      - ./download-repo.sh:/download-repo.sh
+    command:
+      - /bin/bash
+      - -c
+      - |
+        bash download-repo.sh
+        createrepo -v --update /var/www/html/rhel_rpms
+  
+  rpm-server:
+    build: .
+    ports:
+      - "80:80"
+    volumes:
+      - ./rpm:/var/www/html/rhel_rpms
+    depends_on:
+      - rpm-download
