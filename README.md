@@ -8,13 +8,19 @@ These scripts contains the downloader for rpm repositories and the http web-serv
 
 -   Online connection to RHEL servers
 -   Redhat account with relevant subscriptions \(RHEL subscription\)
--   Ensure `download-repo.sh` and `repolist` are in `LF` line ending formats
+-   **_Ensure_** `download-repo.sh` and `repolist` are in `LF` line ending formats
 -   Tested on `Docker-Desktop` for `Windows`
+-   Update `CHANGE_ME` fields with the required inputs (username/password for Redhat)
+-   Update `repolist` with your required rpm repos using it's `Repo ID`, separated by newlines. You may refer to [here](#to-view-the-repo-ids-available) for instructions on retrieving the `Repo ID` from `Red Hat`
+
+## To view the Repo IDs available
+
+-   Make sure to fulfil the [requisites](#requisites)
+-   `docker-compose build`
+-   `docker run rhel-rpm-downloader-and-server-rpm-download subscription-manager repos` to find the list of applicable `Repo ID`s
 
 ## To download and serve
 
--   Update `CHANGE_ME` fields with the required inputs (username/password for Redhat)
--   Update `repolist` with your required rpm repos using it's `Repo ID`, separated by newlines. You may use `docker run offline-rhel-rpm-repo-rpm-download subscription-manager repos` to find the list of applicable `Repo ID`s
 -   Run `docker-compose up --build`
 -   View your downloaded files in `./rpm`
     -   The file structure should be:
