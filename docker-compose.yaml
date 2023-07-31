@@ -5,9 +5,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile-downloader
-      args:
-        RH_USER: CHANGE_ME
-        RH_PASSWORD: CHANGE_ME
+      # For Rhel only
+      # args:
+      #   RH_USER: CHANGE_ME
+      #   RH_PASSWORD: CHANGE_ME
     volumes:
       - ./rpm:/var/www/html/rhel_rpms
       - ./repolist:/repolist

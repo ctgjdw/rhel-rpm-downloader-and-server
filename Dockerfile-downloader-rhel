@@ -1,8 +1,16 @@
-FROM centos:centos7
+FROM registry.access.redhat.com/rhel7:7.9
+
+ARG RH_USER
+ARG RH_PASSWORD
+
+# Prevent subscription-manager from being disabled in container
+RUN sed -i 's/\(def in_container():\)/\1\n    return False/g' /usr/lib64/python*/*-packages/rhsm/config.py
+RUN subscription-manager register --username ${RH_USER} --password ${RH_PASSWORD}
 
 RUN yum install -y yum-utils createrepo
 
 # Any other non-standard yum repositories ...
+
 ## FOR NVIDIA CONTAINER TOOLKIT REPO ...
 
 RUN distribution=$(. /etc/os-release;echo $ID$VERSION_ID) \
